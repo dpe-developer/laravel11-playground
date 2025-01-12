@@ -5,6 +5,7 @@ import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
+import { Input, Typography } from "@material-tailwind/react";
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -28,15 +29,15 @@ export default function Register() {
 
             <form onSubmit={submit}>
                 <div>
-                    <InputLabel htmlFor="name" value="Name" />
 
-                    <TextInput
+                    <Input
+                        label='Name'
                         id="name"
                         name="name"
                         value={data.name}
                         className="mt-1 block w-full"
                         autoComplete="name"
-                        isFocused={true}
+                        autoFocus
                         onChange={(e) => setData('name', e.target.value)}
                         required
                     />
@@ -45,9 +46,9 @@ export default function Register() {
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="email" value="Email" />
 
-                    <TextInput
+                    <Input
+                        label='Email'
                         id="email"
                         type="email"
                         name="email"
@@ -62,9 +63,9 @@ export default function Register() {
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
 
-                    <TextInput
+                    <Input
+                        label='Password'
                         id="password"
                         type="password"
                         name="password"
@@ -79,12 +80,9 @@ export default function Register() {
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel
-                        htmlFor="password_confirmation"
-                        value="Confirm Password"
-                    />
 
-                    <TextInput
+                    <Input
+                        label='Comfirm Password'
                         id="password_confirmation"
                         type="password"
                         name="password_confirmation"

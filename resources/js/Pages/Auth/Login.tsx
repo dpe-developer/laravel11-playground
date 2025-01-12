@@ -6,6 +6,7 @@ import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
+import { Input } from "@material-tailwind/react";
 
 export default function Login({
     status,
@@ -40,16 +41,17 @@ export default function Login({
 
             <form onSubmit={submit}>
                 <div>
-                    <InputLabel htmlFor="email" value="Email" />
 
-                    <TextInput
+                    <Input
+                        label='Email'
+                        size='lg'
                         id="email"
                         type="email"
                         name="email"
                         value={data.email}
                         className="mt-1 block w-full"
                         autoComplete="username"
-                        isFocused={true}
+                        autoFocus={true}
                         onChange={(e) => setData('email', e.target.value)}
                     />
 
@@ -57,9 +59,10 @@ export default function Login({
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
 
-                    <TextInput
+                    <Input
+                        label='Password'
+                        size='lg'
                         id="password"
                         type="password"
                         name="password"

@@ -1,179 +1,203 @@
-import ApplicationLogo from '@/Components/ApplicationLogo';
-import Dropdown from '@/Components/Dropdown';
-import NavLink from '@/Components/NavLink';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
-import { Link, usePage } from '@inertiajs/react';
 import { PropsWithChildren, ReactNode, useState } from 'react';
+import {
+  List,
+  Card,
+  Alert,
+  Avatar,
+  ListItem,
+  Accordion,
+  Typography,
+  AccordionBody,
+  ListItemPrefix,
+  AccordionHeader,
+} from "@material-tailwind/react";
+import {
+  TicketIcon,
+  UserGroupIcon,
+  Square2StackIcon,
+  RectangleGroupIcon,
+  ChatBubbleLeftEllipsisIcon,
+} from "@heroicons/react/24/solid";
+import {
+  ChevronDownIcon,
+  ArrowLeftStartOnRectangleIcon,
+} from "@heroicons/react/24/outline";
 
 export default function Authenticated({
-    header,
-    children,
+  header,
+  children,
 }: PropsWithChildren<{ header?: ReactNode }>) {
-    const user = usePage().props.auth.user;
+  const [open, setOpen] = useState(0);
+  const [openAlert, setOpenAlert] = useState(true);
 
-    const [showingNavigationDropdown, setShowingNavigationDropdown] =
-        useState(false);
+  const handleOpen = (value: any) => {
+    setOpen(open === value ? 0 : value);
+  };
 
-    return (
-        <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
-            <nav className="border-b border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-800">
-                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div className="flex h-16 justify-between">
-                        <div className="flex">
-                            <div className="flex shrink-0 items-center">
-                                <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
-                                </Link>
-                            </div>
+  const LIST_ITEM_STYLES =
+    "text-gray-500 hover:text-white focus:text-white active:text-white hover:bg-opacity-20 focus:bg-opacity-20 active:bg-opacity-20";
 
-                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink
-                                    href={route('dashboard')}
-                                    active={route().current('dashboard')}
-                                >
-                                    Dashboard
-                                </NavLink>
-                            </div>
-                        </div>
-
-                        <div className="hidden sm:ms-6 sm:flex sm:items-center">
-                            <div className="relative ms-3">
-                                <Dropdown>
-                                    <Dropdown.Trigger>
-                                        <span className="inline-flex rounded-md">
-                                            <button
-                                                type="button"
-                                                className="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-300"
-                                            >
-                                                {user.name}
-
-                                                <svg
-                                                    className="-me-0.5 ms-2 h-4 w-4"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    viewBox="0 0 20 20"
-                                                    fill="currentColor"
-                                                >
-                                                    <path
-                                                        fillRule="evenodd"
-                                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                        clipRule="evenodd"
-                                                    />
-                                                </svg>
-                                            </button>
-                                        </span>
-                                    </Dropdown.Trigger>
-
-                                    <Dropdown.Content>
-                                        <Dropdown.Link
-                                            href={route('profile.edit')}
-                                        >
-                                            Profile
-                                        </Dropdown.Link>
-                                        <Dropdown.Link
-                                            href={route('logout')}
-                                            method="post"
-                                            as="button"
-                                        >
-                                            Log Out
-                                        </Dropdown.Link>
-                                    </Dropdown.Content>
-                                </Dropdown>
-                            </div>
-                        </div>
-
-                        <div className="-me-2 flex items-center sm:hidden">
-                            <button
-                                onClick={() =>
-                                    setShowingNavigationDropdown(
-                                        (previousState) => !previousState,
-                                    )
-                                }
-                                className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 transition duration-150 ease-in-out hover:bg-gray-100 hover:text-gray-500 focus:bg-gray-100 focus:text-gray-500 focus:outline-none dark:text-gray-500 dark:hover:bg-gray-900 dark:hover:text-gray-400 dark:focus:bg-gray-900 dark:focus:text-gray-400"
-                            >
-                                <svg
-                                    className="h-6 w-6"
-                                    stroke="currentColor"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        className={
-                                            !showingNavigationDropdown
-                                                ? 'inline-flex'
-                                                : 'hidden'
-                                        }
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M4 6h16M4 12h16M4 18h16"
-                                    />
-                                    <path
-                                        className={
-                                            showingNavigationDropdown
-                                                ? 'inline-flex'
-                                                : 'hidden'
-                                        }
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M6 18L18 6M6 6l12 12"
-                                    />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div
-                    className={
-                        (showingNavigationDropdown ? 'block' : 'hidden') +
-                        ' sm:hidden'
-                    }
-                >
-                    <div className="space-y-1 pb-3 pt-2">
-                        <ResponsiveNavLink
-                            href={route('dashboard')}
-                            active={route().current('dashboard')}
-                        >
-                            Dashboard
-                        </ResponsiveNavLink>
-                    </div>
-
-                    <div className="border-t border-gray-200 pb-1 pt-4 dark:border-gray-600">
-                        <div className="px-4">
-                            <div className="text-base font-medium text-gray-800 dark:text-gray-200">
-                                {user.name}
-                            </div>
-                            <div className="text-sm font-medium text-gray-500">
-                                {user.email}
-                            </div>
-                        </div>
-
-                        <div className="mt-3 space-y-1">
-                            <ResponsiveNavLink href={route('profile.edit')}>
-                                Profile
-                            </ResponsiveNavLink>
-                            <ResponsiveNavLink
-                                method="post"
-                                href={route('logout')}
-                                as="button"
-                            >
-                                Log Out
-                            </ResponsiveNavLink>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-
-            {header && (
-                <header className="bg-white shadow dark:bg-gray-800">
-                    <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                        {header}
-                    </div>
-                </header>
-            )}
-
-            <main>{children}</main>
+  return (
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
+      <Card
+        color="gray"
+        className="min-h-screen w-full max-w-[20rem] mx-auto p-6 shadow-md"
+      >
+        <div className="mb-2 flex items-center gap-4 p-4">
+          <img
+            src="https://www.material-tailwind.com/logos/mt-logo.png"
+            alt="brand"
+            className="h-9 w-9"
+          />
+          <Typography className="text-lg font-bold text-gray-300">
+            Material Tailwind
+          </Typography>
         </div>
-    );
+        <hr className="my-2 border-gray-800" />
+        <List>
+          <Accordion open={open === 1}>
+            <ListItem
+              selected={open === 1}
+              data-selected={open === 1}
+              onClick={() => handleOpen(1)}
+              className="p-3 hover:bg-opacity-20 text-gray-500 select-none focus:bg-opacity-20 active:bg-opacity-20 data-[selected=true]:bg-gray-50/20 hover:text-white focus:text-white active:text-white data-[selected=true]:text-white"
+            >
+              <ListItemPrefix>
+                <Avatar
+                  size="sm"
+                  src="https://www.material-tailwind.com/img/avatar1.jpg"
+                />
+              </ListItemPrefix>
+              <Typography className="mr-auto font-normal text-inherit">
+                Brooklyn Alice
+              </Typography>
+              <ChevronDownIcon
+                strokeWidth={3}
+                className={`ml-auto text-gray-500 h-4 w-4 transition-transform ${open === 1 ? "rotate-180" : ""}`}
+              />
+            </ListItem>
+            <AccordionBody className="py-1">
+              <List className="p-0">
+                <ListItem className={`px-16 ${LIST_ITEM_STYLES}`}>
+                  My Profile
+                </ListItem>
+                <ListItem className={`px-16 ${LIST_ITEM_STYLES}`}>
+                  Settings
+                </ListItem>
+              </List>
+            </AccordionBody>
+          </Accordion>
+          <hr className="my-2 border-gray-800" />
+          <Accordion open={open === 2}>
+            <ListItem
+              selected={open === 2}
+              data-selected={open === 2}
+              onClick={() => handleOpen(2)}
+              className="px-3 py-[9px] hover:bg-opacity-20 text-gray-500 select-none focus:bg-opacity-20 active:bg-opacity-20 data-[selected=true]:bg-gray-50/20 hover:text-white focus:text-white active:text-white data-[selected=true]:text-white"
+            >
+              <ListItemPrefix>
+                <RectangleGroupIcon className="h-5 w-5" />
+              </ListItemPrefix>
+              <Typography className="mr-auto font-normal text-inherit">
+                Dashboard
+              </Typography>
+              <ChevronDownIcon
+                strokeWidth={3}
+                className={`ml-auto text-gray-500 h-4 w-4 transition-transform ${open === 2 ? "rotate-180" : ""}`}
+              />
+            </ListItem>
+            <AccordionBody className="py-1">
+              <List className="p-0">
+                <ListItem className={`px-12 ${LIST_ITEM_STYLES}`}>
+                  Analytics
+                </ListItem>
+                <ListItem className={`px-12 ${LIST_ITEM_STYLES}`}>
+                  Sales
+                </ListItem>
+              </List>
+            </AccordionBody>
+          </Accordion>
+          <ListItem className={LIST_ITEM_STYLES}>
+            <ListItemPrefix>
+              <Square2StackIcon className="h-5 w-5" />
+            </ListItemPrefix>
+            Products
+          </ListItem>
+          <ListItem className={LIST_ITEM_STYLES}>
+            <ListItemPrefix>
+              <TicketIcon className="h-5 w-5" />
+            </ListItemPrefix>
+            Orders
+          </ListItem>
+          <ListItem className={LIST_ITEM_STYLES}>
+            <ListItemPrefix>
+              <UserGroupIcon className="h-5 w-5" />
+            </ListItemPrefix>
+            Customers
+          </ListItem>
+        </List>
+        <hr className="my-2 border-gray-800" />
+        <List>
+          <ListItem className={LIST_ITEM_STYLES}>
+            <ListItemPrefix>
+              <ChatBubbleLeftEllipsisIcon className="h-5 w-5" />
+            </ListItemPrefix>
+            Help & Support
+          </ListItem>
+          <ListItem className={LIST_ITEM_STYLES}>
+            <ListItemPrefix>
+              <ArrowLeftStartOnRectangleIcon
+                strokeWidth={2.5}
+                className="h-5 w-5"
+              />
+            </ListItemPrefix>
+            Sign Out
+          </ListItem>
+        </List>
+        <Alert
+          open={openAlert}
+          className="mt-auto bg-gray-800"
+          variant="ghost"
+        >
+          <Typography
+            variant="small"
+            color="white"
+            className="mb-1 font-bold"
+          >
+            New Version Available
+          </Typography>
+          <Typography variant="small" color="white" className="font-normal">
+            Update your app and enjoy the new features and improvements.
+          </Typography>
+          <div className="mt-4 flex gap-4">
+            <Typography
+              as="a"
+              href="#"
+              variant="small"
+              color="white"
+              className="font-normal"
+              onClick={() => setOpenAlert(false)}
+            >
+              Dismiss
+            </Typography>
+            <Typography
+              as="a"
+              href="#"
+              variant="small"
+              color="white"
+              className="font-medium"
+            >
+              Upgrade Now
+            </Typography>
+          </div>
+        </Alert>
+        <Typography
+          variant="small"
+          className="mt-5 font-medium text-gray-400 flex justify-center"
+        >
+          mt v2.1.2
+        </Typography>
+      </Card>
+    </div>
+  );
 }
